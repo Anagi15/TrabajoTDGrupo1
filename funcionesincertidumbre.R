@@ -168,23 +168,24 @@ criterio.Hurwicz = function(tablaX,alfa=0.3,favorable=TRUE) {
 }
 
 ## factor de optimismo   (alfab * "lo mejor" Altmax en favor. y Altmin en desf.)
+
 criterio.Hurwicz.General = function(tablaX,alfa=0.3,favorable=TRUE) {
     # si alfa es un escalar entre 0 y 1 lo obtiene para ese único valor
     # si alfa es igual a un número mayor que 1, lo usa para obtener cálculos para dividir el rango 0-1
     X = tablaX;
-    if (favorable) {
-        Altmin = apply(X,MARGIN=1,min);
-        Altmax= apply(X,MARGIN=1,max);
-        if (alfa<=1) {
-            valfa = c(alfa);
-        } else {
+    if (favorable) { #si son beneficios
+        Altmin = apply(X,MARGIN=1,min);#calculamos el mínimo por filas
+        Altmax= apply(X,MARGIN=1,max);#calculamos el máximo por filas
+        if (alfa<=1) {#vemos si el valor de alfa es inferior o igual a 1
+            valfa = c(alfa);#en caso de que lo sea le llamamos valfa
+        } else {#en caso contrario valfa será una secuencia de valores entre 0 y 1 cuya distancia es de 1/alfa
             valfa = seq(from=0,to=1,by=(1/alfa)); ## alfa: 100, 200,
         }
         vHurwicz = rep(0,length(valfa))
         Alt_vHurwicz = rep(0,length(valfa))
         for (i in 1:length(valfa)) {
-            alfab = valfa[i];
-            vAltH = alfab * Altmax + (1-alfab) * Altmin;
+            alfab = valfa[i]; #como hemos creado un conjunto de valres vamos aplicando el criterio uno por uno
+            vAltH = alfab * Altmax + (1-alfab) * Altmin;#Ponemos la formula alfa*Pesimista + (1-alfa)Optimista
             vHurwicz[i] = max(vAltH);
             Alt_vHurwicz[i] = which.max(vAltH);
             Alt_vHurwicz_g = which.max.general(vAltH);
