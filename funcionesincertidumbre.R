@@ -41,8 +41,10 @@ which.max.general = function(vector) {#proporcionamos un vector a la función
 distanciaEuclidea = function(pto1,pto2) {
     return( sqrt( sum( (pto1-pto2)^2 )  ) )
 }
-
-
+#Esta funcion trata de encontrar la distancia entre dos puntos, dados dichos puntos en R.
+#Será la dimension igual al número de valores que introduzcamos en los vectores llamados pto1 y pto2.
+#se trata de restar valor los dos valores de x en caso que el vector sea (x,y) y elevarlos al cuadrado y sumarle la misma cuenta realizada para la 
+#y. A todo eso le hacemos la raiz cuadrada y nos dara la distancia entre ambos.
 
 criterio.tablaX.ejemplos = function(cual=1) {
 
